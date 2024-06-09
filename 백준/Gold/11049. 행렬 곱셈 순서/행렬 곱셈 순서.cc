@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     for (int i = 1 ; i < n ; i++){  //간격
         for (int j = 1 ; j + i <= n ; j++){ //시작점 -> 끝점 : i + j
             dp[j][i + j] = 987654321;
-            for (int k = j ; k <= i + j ; k++){ //시작점과 끝점 사이
+            for (int k = j ; k < i + j ; k++){ //시작점과 끝점 사이
                 dp[j][i + j] = min(dp[j][i + j], dp[j][k] + dp[k + 1][i + j] + num[j].first * num[k].second * num[i + j].second);
             }
         }
