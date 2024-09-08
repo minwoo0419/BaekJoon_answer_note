@@ -11,7 +11,7 @@ vector<int> visits(10001, 0);
 int find(int x){
     if (visits[x] == x)
         return x;
-    return find(visits[x]);
+    return visits[x] = find(visits[x]);
 }
 
 bool isSameParent(int x, int y){
