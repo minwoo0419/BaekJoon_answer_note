@@ -2,39 +2,38 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <map>
 using namespace std;
-int n, hp, ans = 0;
-vector<vector<int>> maps;
-vector<int> v;
-int find_answer(vector<int> &check){
-    int i = 0, k = hp;
-    for ( ; i < check.size() ; i++){
-        if (k < maps[v[i]][0])
-            break;
-        k -= maps[v[i]][1];
+int n, answer = 0, hp;
+int calc(vector<int> &check, vector<vector<int>> &dungeons){
+    int num = 0;
+    int k = hp;
+    for (int i = 0 ; i < n ; i++){
+        if (k < dungeons[check[i]][0]) break;
+        k -= dungeons[check[i]][1];
+        num++;
     }
-    return i;
+    return num;
 }
-void perm(vector<int> &check, int cnt){
-    if (cnt == n){
-        ans = max(ans, find_answer(check));
+void dfs(vector<int> &visits, vector<int> &check, vector<vector<int>> &dangeons){
+    if (check.size() == n) {
+        answer = max(answer, calc(check, dangeons));
         return ;
     }
     for (int i = 0 ; i < n ; i++){
-        if (!check[i]){
-            check[i] = 1;
-            v.push_back(i);
-            perm(check, cnt + 1);
-            v.pop_back();
-            check[i] = 0;
-        }
+        if (visits[i]) continue;
+        visits[i] = 1;
+        check.push_back(i);
+        dfs(visits, check, dangeons);
+        check.pop_back();
+        visits[i] = 0;
     }
 }
 int solution(int k, vector<vector<int>> dungeons) {
-    maps = dungeons;
-    hp = k;
     n = dungeons.size();
-    vector<int> check(n, 0);
-    perm(check, 0);
-    return ans;
+    hp = k;
+    vector<int> visits(n, 0);
+    vector<int> check;
+    dfs(visits, check, dungeons);
+    return answer;
 }
