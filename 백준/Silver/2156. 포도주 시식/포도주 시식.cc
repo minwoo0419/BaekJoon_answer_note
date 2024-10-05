@@ -6,27 +6,21 @@ int main()
     vector <int> a;
     vector <int> dp;
     int n;
-    int x;
     int sum = 0;
     cin >> n;
-    for (int i = 0 ; i < n ; i++)
+    a.assign(n+1, 0);
+    dp.assign(n+1, 0);
+    for (int i = 1 ; i <= n ; i++)
     {
-        cin >> x;
-        a.push_back(x);
-        dp.push_back(0);
+        cin >> a[i];
     }
-    for (int i = 0 ; i < n ; i++)
+    dp[1] = a[1];
+    dp[2] = a[1] + a[2];
+    for (int i = 3 ; i <= n ; i++)
     {
-        if (i == 0)
-            dp[i] = a[i];
-        else if (i == 1)
-            dp[i] = a[i] + a[i - 1];
-        else
-            dp[i] = max(dp[i - 2] + a[i], dp[i - 3] + a[i - 1] + a[i]);
-        dp[i] = max(dp[i - 1], dp[i]);
-        if (sum < dp[i])
-            sum = dp[i];
+        dp[i] = max(dp[i - 2] + a[i], dp[i - 3] + a[i-1] + a[i]);
+        dp[i] = max(dp[i], dp[i-1]);
     }
-    cout << sum;
+    cout << dp[n];
     return (0);
 }
