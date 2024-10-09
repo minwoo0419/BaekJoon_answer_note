@@ -1,33 +1,27 @@
 #include <iostream>
 #include <vector>
+#include <map>
 #include <algorithm>
-#include <queue>
-#include <cmath>
-#include <cstring>
 #include <stack>
 using namespace std;
-vector <int> num;
-vector <int> num2;
+#define INF (~0LLU >> 2)
+int n, m;
+string str;
 int main()
-{
-    int n, k, cnt = 0;
-    cin >> n >> k;
-    for (int i = 0 ; i < n ; i++)
-    {
-        char a;
-        cin >> a;
-        num.push_back(a - '0');
-    }
-    for (int i = 0 ; i < num.size() ; i++)
-    {
-        while (cnt < k && !num2.empty() && num2.back() < num[i])
-        {
-                num2.pop_back();
-                cnt++;
+{  
+    cin >> n >> m;
+    cin >> str;
+    vector<char> stk;
+    int cnt = 0;
+    for (int i = 0 ; i < n ; i++){
+        while(cnt < m && !stk.empty() && stk.back() < str[i]){
+            stk.pop_back();
+            cnt++;
         }
-        num2.push_back(num[i]);
+        stk.push_back(str[i]);
     }
-    for (int i = 0 ; i < num2.size() - (k - cnt) ; i++)
-        cout << num2[i];
-    return 0;
+    for (int i = 0 ; i < stk.size() - (m - cnt) ; i++){
+        cout << stk[i];
+    }
+    return (0);
 }
