@@ -1,6 +1,6 @@
 -- 코드를 작성해주세요
-select distinct a.id, a.email, a.first_name, a.last_name
+-- 코드를 작성해주세요
+select a.id, a.email, a.first_name, a.last_name
 from developers a
-join (select b.code from skillcodes b where b.category = 'Front End') b
-on a.skill_code & b.code
+where a.skill_code & (select sum(b.code) from skillcodes b where b.category = 'Front End')
 order by a.id;
