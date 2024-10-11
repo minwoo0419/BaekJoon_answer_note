@@ -1,20 +1,17 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <unordered_map>
+#include <unordered_set>
 using namespace std;
 
 bool solution(vector<string> phone_book) {
-    unordered_map<string, int> m;
+    unordered_set<string> sets;
     for (int i = 0 ; i < phone_book.size() ; i++){
-        m[phone_book[i]] = 1;
+        sets.insert(phone_book[i]);
     }
-    for (int i = 0 ; i < phone_book.size() ; i++){
-        string s = "";
-        for (int j = 0 ; j < phone_book[i].length() ; j++){
-            s += phone_book[i][j];
-            if (m[s] && s != phone_book[i])
-                return false;
+    for (auto s : sets){
+        for (int i = 1 ; i < s.length() ; i++){
+            if (sets.find(s.substr(0, i)) != sets.end()) return false;
         }
     }
     return true;
